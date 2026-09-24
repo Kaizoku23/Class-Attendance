@@ -12485,6 +12485,15 @@ td.p{color:var(--ok); font-weight:700} td.a{color:var(--margin)}
 .empty{padding:18px; border:1.5px dashed var(--border); border-radius:10px; color:var(--muted); background:var(--surface)}
 .toast{position:fixed; left:50%; bottom:calc(16px + env(safe-area-inset-bottom,0px)); transform:translateX(-50%); background:var(--text); color:var(--paper); padding:10px 16px; border-radius:10px; font-weight:700; opacity:0; transition:opacity .2s; pointer-events:none; max-width:90vw}
 .toast.show{opacity:1}
+.overlay{position:fixed; inset:0; background:rgba(10,14,30,.5); display:flex; align-items:center; justify-content:center; padding:16px; z-index:20}
+.overlay[hidden]{display:none}
+.sheet{background:var(--paper); border:1.5px solid var(--border); border-radius:14px; max-width:420px; width:100%; max-height:85vh; overflow-y:auto; padding:22px; box-shadow:0 14px 44px rgba(0,0,0,.35)}
+.sheet h3{font:700 2rem/1.05 Caveat,"Comic Sans MS",cursive; color:var(--ink); margin:0 0 2px}
+.sheet .when{color:var(--muted); margin:0 0 14px}
+.sheet ol{margin:0 0 16px; padding-left:24px}
+.sheet ol li{padding:7px 0; border-bottom:1px solid var(--line-strong); font-weight:700}
+.sheet .allhere{padding:18px; text-align:center; background:var(--ok-bg); color:var(--ok); border-radius:10px; font-weight:700; margin-bottom:16px}
+.sheet .actions{display:flex; gap:8px; flex-wrap:wrap}
 .status{font-size:.85rem; color:var(--muted)}
 @media (max-width:480px){ .wrap{padding-left:56px; padding-right:12px} nav button{font-size:.85rem} }
 @media (prefers-reduced-motion:reduce){ .toast{transition:none} }
@@ -12538,6 +12547,7 @@ td.p{color:var(--ok); font-weight:700} td.a{color:var(--margin)}
     <h2>Check by hand</h2>
     <p class="help">For a forgotten card, tap the student’s name.</p>
     <ul class="names" id="manual"></ul>
+    <div class="row"><button class="btn" id="finishBtn">Finish today’s attendance</button></div>
   </section>
 
   <section id="records">
@@ -12553,6 +12563,17 @@ td.p{color:var(--ok); font-weight:700} td.a{color:var(--margin)}
 </div>
 <div class="toast" id="toast"></div>
 <canvas id="scanCanvas" hidden></canvas>
+<div class="overlay" id="absOverlay" hidden role="dialog" aria-modal="true" aria-labelledby="absTitle">
+  <div class="sheet">
+    <h3 id="absTitle">Absentees</h3>
+    <p class="when" id="absWhen"></p>
+    <div id="absBody"></div>
+    <div class="actions">
+      <button class="btn" id="absCopy">Copy list</button>
+      <button class="btn ghost" id="absClose">Close</button>
+    </div>
+  </div>
+</div>
 
 <script>
 const $ = s => document.querySelector(s);
@@ -12647,7 +12668,31 @@ function renderScan(){
   ul.innerHTML = state.students.map(s=>`<li><span class="n">${esc(s.name)}</span><button class="pill ${p[s.id]?"in":""}" data-m="${s.id}">${p[s.id]?"Present "+p[s.id]:"Absent"}</button></li>`).join("");
   ul.querySelectorAll("[data-m]").forEach(b=>b.onclick=()=>toggleManual(b.dataset.m));
 }
-$("#day").onchange = e => { state.date = e.target.value || todayStr(); showLast("",""); renderScan(); };
+$("#day").onchange = e => { state.date = e.target.value || todayStr(); showLast("",""); if(!$("#absOverlay").hidden) closeAbsentees(); renderScan(); };
+
+/* ---------- finish attendance / absentees ---------- */
+function fmtDateLong(d){ const [y,m,dd]=d.split("-"); const dt=new Date(+y,+m-1,+dd); return dt.toLocaleDateString(undefined,{weekday:"long", day:"numeric", month:"long", year:"numeric"}); }
+function absenteesFor(date){ const p=state.days[date]||{}; return state.students.filter(s=>!p[s.id]); }
+function openAbsentees(){
+  if(!state.students.length){ toast("Add students first"); return; }
+  const list = absenteesFor(state.date);
+  $("#absWhen").textContent = fmtDateLong(state.date);
+  $("#absBody").innerHTML = list.length
+    ? "<ol>"+list.map(s=>`<li>${esc(s.name)}</li>`).join("")+"</ol>"
+    : '<div class="allhere">Everyone is present today 🎉</div>';
+  $("#absOverlay").hidden=false; $("#absClose").focus();
+}
+function closeAbsentees(){ $("#absOverlay").hidden=true; $("#finishBtn").focus(); }
+$("#finishBtn").onclick = openAbsentees;
+$("#absClose").onclick = closeAbsentees;
+$("#absOverlay").addEventListener("click", e => { if(e.target.id==="absOverlay") closeAbsentees(); });
+document.addEventListener("keydown", e => { if(e.key==="Escape" && !$("#absOverlay").hidden) closeAbsentees(); });
+$("#absCopy").onclick = async () => {
+  const list = absenteesFor(state.date);
+  const text = "Absences — "+fmtDateLong(state.date)+"\n"+(list.length ? list.map((s,i)=>(i+1)+". "+s.name).join("\n") : "Everyone present");
+  try{ await navigator.clipboard.writeText(text); toast("Copied — paste it into your journal"); }
+  catch(e){ toast("Couldn't copy — write from the list shown"); }
+};
 
 let stream=null, scanning=false, lastCode="", lastAt=0;
 const video=$("#video"), canvas=$("#scanCanvas"), ctx=canvas.getContext("2d",{willReadFrequently:true});
