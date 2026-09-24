@@ -12444,13 +12444,20 @@ body{
 header{padding:20px 0 4px}
 h1{font:700 2.6rem/1 Caveat,"Comic Sans MS",cursive; color:var(--ink); margin:0}
 .sub{color:var(--muted); margin:4px 0 0}
-nav{position:sticky; top:env(safe-area-inset-top,0px); z-index:5; display:flex; gap:6px; padding:12px 0; background:var(--paper)}
+.sticky{position:sticky; top:env(safe-area-inset-top,0px); z-index:5; background:var(--paper); padding-top:10px}
+.classbar{display:flex; gap:8px; overflow-x:auto; padding:2px 2px 8px; -webkit-overflow-scrolling:touch}
+.classbar::-webkit-scrollbar{height:6px}
+.cpill{flex:0 0 auto; font:inherit; font-weight:700; font-size:.95rem; padding:8px 15px; border-radius:999px; border:1.5px solid var(--border); background:var(--surface); color:var(--text); cursor:pointer; white-space:nowrap}
+.cpill[aria-pressed="true"]{background:var(--margin); border-color:var(--margin); color:#fff}
+.cpill.add{border-style:dashed; color:var(--muted); background:transparent}
+nav{display:flex; gap:6px; padding:6px 0 10px}
 nav button{flex:1; font:inherit; font-size:.95rem; padding:10px 6px; border:1.5px solid var(--border); background:var(--surface); color:var(--text); border-radius:10px; cursor:pointer}
 nav button[aria-selected="true"]{background:var(--ink); color:var(--paper); border-color:var(--ink); font-weight:700}
 section{display:none} section.on{display:block}
-h2{font:700 1.9rem/1.1 Caveat,"Comic Sans MS",cursive; color:var(--ink); margin:18px 0 8px}
+h2{font:700 1.9rem/1.1 Caveat,"Comic Sans MS",cursive; color:var(--ink); margin:18px 0 8px; display:flex; align-items:baseline; gap:8px; flex-wrap:wrap}
+h2 .tag{font:400 1rem "Atkinson Hyperlegible",sans-serif; color:var(--muted)}
 p.help{color:var(--muted); margin:0 0 12px}
-textarea,input[type=date]{width:100%; font:inherit; padding:10px 12px; border:1.5px solid var(--border); border-radius:10px; background:var(--surface); color:var(--text)}
+textarea,input[type=date],.input{width:100%; font:inherit; padding:10px 12px; border:1.5px solid var(--border); border-radius:10px; background:var(--surface); color:var(--text)}
 textarea{min-height:140px; resize:vertical}
 .btn{font:inherit; font-weight:700; padding:11px 16px; border-radius:10px; border:1.5px solid var(--ink); background:var(--ink); color:var(--paper); cursor:pointer}
 .btn.ghost{background:transparent; color:var(--ink)}
@@ -12460,8 +12467,9 @@ button:focus-visible,textarea:focus-visible,input:focus-visible{outline:3px soli
 ul.names{list-style:none; padding:0; margin:8px 0}
 ul.names li{display:flex; align-items:center; gap:10px; min-height:44px; border-bottom:1px solid var(--line-strong)}
 ul.names li .n{flex:1; font-weight:700}
-ul.names li .t{color:var(--muted); font-size:.9rem}
-.x{font:inherit; border:0; background:none; color:var(--margin); cursor:pointer; padding:8px}
+ul.names input.renameIn{flex:1; min-width:0; font:inherit; font-weight:700; padding:7px 8px; border:1px solid transparent; border-radius:6px; background:transparent; color:var(--text)}
+ul.names input.renameIn:hover,ul.names input.renameIn:focus{border-color:var(--border); background:var(--surface)}
+.x{font:inherit; border:0; background:none; color:var(--margin); cursor:pointer; padding:8px; flex:0 0 auto}
 .pill{font:inherit; font-size:.9rem; border-radius:999px; padding:6px 12px; border:1.5px solid var(--border); background:var(--surface); color:var(--muted); cursor:pointer; min-width:92px}
 .pill.in{background:var(--ok-bg); border-color:var(--ok); color:var(--ok); font-weight:700}
 .cam{position:relative; background:#000; border-radius:14px; overflow:hidden; aspect-ratio:4/3; max-height:60vh; margin:10px 0}
@@ -12483,6 +12491,7 @@ th,td{padding:8px 10px; border-bottom:1px solid var(--line-strong); text-align:c
 th:first-child,td:first-child{text-align:left; position:sticky; left:0; background:var(--surface)}
 td.p{color:var(--ok); font-weight:700} td.a{color:var(--margin)}
 .empty{padding:18px; border:1.5px dashed var(--border); border-radius:10px; color:var(--muted); background:var(--surface)}
+.empty .btn{margin-top:10px}
 .toast{position:fixed; left:50%; bottom:calc(16px + env(safe-area-inset-bottom,0px)); transform:translateX(-50%); background:var(--text); color:var(--paper); padding:10px 16px; border-radius:10px; font-weight:700; opacity:0; transition:opacity .2s; pointer-events:none; max-width:90vw}
 .toast.show{opacity:1}
 .overlay{position:fixed; inset:0; background:rgba(10,14,30,.5); display:flex; align-items:center; justify-content:center; padding:16px; z-index:20}
@@ -12498,7 +12507,7 @@ td.p{color:var(--ok); font-weight:700} td.a{color:var(--margin)}
 @media (max-width:480px){ .wrap{padding-left:56px; padding-right:12px} nav button{font-size:.85rem} }
 @media (prefers-reduced-motion:reduce){ .toast{transition:none} }
 @media print{
-  body{background:#fff} header,nav,section:not(#cards),#cards .help,#cards .row{display:none!important}
+  body{background:#fff} header,.sticky,section:not(#cards){display:none!important}
   #cards{display:block!important} .wrap{padding:0; max-width:none}
   .cards{grid-template-columns:repeat(4,1fr)}
 }
@@ -12511,30 +12520,33 @@ td.p{color:var(--ok); font-weight:700} td.a{color:var(--margin)}
     <p class="sub">Print a card for each student, then scan them with your phone as they come in.</p>
   </header>
 
-  <nav role="tablist">
-    <button role="tab" data-tab="students" aria-selected="true">Students</button>
-    <button role="tab" data-tab="cards" aria-selected="false">Cards</button>
-    <button role="tab" data-tab="scan" aria-selected="false">Scan</button>
-    <button role="tab" data-tab="records" aria-selected="false">Records</button>
-  </nav>
+  <div class="sticky">
+    <div class="classbar" id="classbar" role="group" aria-label="Choose a class"></div>
+    <nav role="tablist">
+      <button role="tab" data-tab="students" aria-selected="true">Students</button>
+      <button role="tab" data-tab="cards" aria-selected="false">Cards</button>
+      <button role="tab" data-tab="scan" aria-selected="false">Scan</button>
+      <button role="tab" data-tab="records" aria-selected="false">Records</button>
+    </nav>
+  </div>
 
   <section id="students" class="on">
-    <h2>Your class list</h2>
-    <p class="help">Paste or type names, one per line.</p>
-    <textarea id="namesIn" placeholder="Amina Benali&#10;Yacine Haddad&#10;Sara Mansouri"></textarea>
+    <h2>Your class list <span class="tag" id="stuTag" dir="auto"></span></h2>
+    <p class="help">Paste or type names, one per line — Arabic or Latin script both work.</p>
+    <textarea id="namesIn" dir="auto" placeholder="أمينة بن علي&#10;Yacine Haddad&#10;سارة منصوري"></textarea>
     <div class="row"><button class="btn" id="addNames">Add students</button><span class="status" id="saveStatus"></span></div>
     <ul class="names" id="roster"></ul>
   </section>
 
   <section id="cards">
-    <h2>Student cards</h2>
+    <h2>Student cards <span class="tag" id="cardsTag" dir="auto"></span></h2>
     <p class="help">Each card has a unique code. Print them, cut them out, and hand one to each student (they can glue it inside a notebook).</p>
     <div class="row"><button class="btn" id="printCards">Print cards</button><button class="btn ghost" id="dlCards">Download cards</button></div>
     <div class="cards" id="cardGrid"></div>
   </section>
 
   <section id="scan">
-    <h2>Take attendance</h2>
+    <h2>Take attendance <span class="tag" id="scanTag" dir="auto"></span></h2>
     <div class="row"><label for="day" class="status">Class date</label><input type="date" id="day" style="max-width:200px"></div>
     <div class="row"><span class="count" id="count">0 / 0</span><span class="status">present</span></div>
     <div class="cam" id="cam">
@@ -12551,18 +12563,19 @@ td.p{color:var(--ok); font-weight:700} td.a{color:var(--margin)}
   </section>
 
   <section id="records">
-    <h2>Attendance record</h2>
+    <h2>Attendance record <span class="tag" id="recTag" dir="auto"></span></h2>
     <p class="help">Every class you’ve taken attendance for.</p>
     <div id="recordBox"></div>
     <div class="row"><button class="btn" id="dlCsv">Export to Excel (CSV)</button></div>
     <h2>Backup</h2>
-    <p class="help">Everything is stored only on this phone. Save a backup now and then, so nothing is lost if the browser data is cleared.</p>
+    <p class="help">Save a backup of every class now and then, so nothing is lost.</p>
     <div class="row"><button class="btn ghost" id="backupBtn">Save backup</button><button class="btn ghost" id="restoreBtn">Restore backup</button><input type="file" id="restoreFile" accept=".json,application/json" hidden></div>
-    <textarea id="csvOut" readonly style="display:none" aria-label="CSV data to copy"></textarea>
+    <textarea id="csvOut" readonly style="display:none" aria-label="Data to copy"></textarea>
   </section>
 </div>
 <div class="toast" id="toast"></div>
 <canvas id="scanCanvas" hidden></canvas>
+
 <div class="overlay" id="absOverlay" hidden role="dialog" aria-modal="true" aria-labelledby="absTitle">
   <div class="sheet">
     <h3 id="absTitle">Absentees</h3>
@@ -12575,60 +12588,60 @@ td.p{color:var(--ok); font-weight:700} td.a{color:var(--margin)}
   </div>
 </div>
 
+<div class="overlay" id="classOverlay" hidden role="dialog" aria-modal="true" aria-labelledby="classOverlayTitle">
+  <div class="sheet">
+    <h3 id="classOverlayTitle">Your classes</h3>
+    <p class="when">Add, rename, or remove a class.</p>
+    <ul class="names" id="classList"></ul>
+    <div class="row">
+      <input type="text" id="newClassName" class="input" dir="auto" placeholder="Class name" style="flex:1; min-width:140px">
+      <button class="btn" id="addClassSave">Add</button>
+    </div>
+    <div class="actions"><button class="btn ghost" id="classOverlayClose">Done</button></div>
+  </div>
+</div>
+
 <script>
 const $ = s => document.querySelector(s);
 const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const todayStr = () => { const d = new Date(); return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0"); };
+const fileSafe = s => String(s||"class").replace(/[\\/:*?"<>|]+/g,"_").trim() || "class";
 const PREFIX = "PRESENCE:";
-const state = { students: [], days: {}, date: todayStr() };
+const state = { classes: [], currentClassId: null, dayCache: {}, daysLoaded: {}, date: todayStr() };
 let db = null, downloads = null;
 
 function toast(msg){ const t=$("#toast"); t.textContent=msg; t.classList.add("show"); clearTimeout(toast.h); toast.h=setTimeout(()=>t.classList.remove("show"),2200); }
+function newId(){ return "i"+Math.random().toString(36).slice(2,9); }
+function currentClass(){ return state.classes.find(c=>c.id===state.currentClassId) || null; }
+function classDays(id){ return (state.dayCache[id] ||= {}); }
+function presentFor(classId, date){ const cd=classDays(classId); return (cd[date] ||= {}); }
+function noClassBlock(){ return '<div class="empty">No class selected yet. <button class="btn openClasses" type="button">Add a class</button></div>'; }
+document.addEventListener("click", e => { if(e.target.closest(".openClasses")) openManageClasses(); });
 
-/* ---------- storage: shared db when available, browser storage as backup ---------- */
-function localSave(){ try{ localStorage.setItem("attendance-v1", JSON.stringify({students:state.students, days:state.days})); }catch(e){} }
-function localLoad(){ try{ const v=JSON.parse(localStorage.getItem("attendance-v1")||"null"); if(v){ state.students=v.students||[]; state.days=v.days||{}; } }catch(e){} }
-async function saveRoster(){ localSave(); $("#saveStatus").textContent="Saved on this phone"; }
-async function saveDay(date){ localSave(); }
-async function loadAll(){ localLoad(); renderAll(); }
-
-/* ---------- students ---------- */
-function newId(){ return "s"+Math.random().toString(36).slice(2,8); }
-$("#addNames").onclick = () => {
-  const names = $("#namesIn").value.split("\n").map(s=>s.trim()).filter(Boolean);
-  if(!names.length){ toast("Type at least one name"); return; }
-  names.forEach(n => state.students.push({id:newId(), name:n}));
-  state.students.sort((a,b)=>a.name.localeCompare(b.name));
-  $("#namesIn").value=""; saveRoster(); renderAll(); toast(names.length+" added");
-};
-function removeStudent(id){
-  const s = state.students.find(x=>x.id===id);
-  if(!s || !confirm("Remove "+s.name+" from the class list? Their card will stop working.")) return;
-  state.students = state.students.filter(x=>x.id!==id); saveRoster(); renderAll();
+/* ---------- storage (swapped for the offline build) ---------- */
+function localSave(){ try{ localStorage.setItem("attendance-v2", JSON.stringify({classes:state.classes, dayCache:state.dayCache, currentClassId:state.currentClassId})); }catch(e){} }
+function localLoad(){
+  try{
+    const raw = JSON.parse(localStorage.getItem("attendance-v2")||"null");
+    if(raw && Array.isArray(raw.classes)){ state.classes=raw.classes; state.dayCache=raw.dayCache||{}; state.currentClassId=raw.currentClassId||null; return; }
+    const old = JSON.parse(localStorage.getItem("attendance-v1")||"null");
+    if(old && Array.isArray(old.students)){
+      const cls = {id:newId(), name:"Class 1", students:old.students, order:0};
+      state.classes=[cls]; state.dayCache={[cls.id]: old.days||{}}; state.currentClassId=cls.id;
+    }
+  }catch(e){}
 }
-function renderRoster(){
-  const ul=$("#roster");
-  if(!state.students.length){ ul.innerHTML='<li class="empty">No students yet. Add names above to get started.</li>'; return; }
-  ul.innerHTML = state.students.map(s=>`<li><span class="n">${esc(s.name)}</span><button class="x" data-rm="${s.id}" aria-label="Remove ${esc(s.name)}">Remove</button></li>`).join("");
-  ul.querySelectorAll("[data-rm]").forEach(b=>b.onclick=()=>removeStudent(b.dataset.rm));
+async function saveClassMeta(cls){ localSave(); $("#saveStatus").textContent="Saved on this phone"; }
+async function saveDayData(classId, date){ localSave(); }
+async function saveSelection(){ localSave(); }
+async function loadDaysFor(id){ state.daysLoaded[id]=true; }
+async function deleteClassRemote(id){ /* local-only: nothing to clean up remotely */ }
+async function loadAll(){
+  localLoad();
+  if(!state.currentClassId && state.classes.length) state.currentClassId = state.classes[0].id;
+  state.classes.forEach(c=>state.daysLoaded[c.id]=true);
+  renderAll();
 }
-
-/* ---------- cards ---------- */
-function qrSvg(text){ const q=qrcode(0,"M"); q.addData(text); q.make(); return q.createSvgTag({cellSize:4, margin:2, scalable:true}); }
-function cardsMarkup(){ return state.students.map(s=>`<div class="card">${qrSvg(PREFIX+s.id)}<div class="cn">${esc(s.name)}</div></div>`).join(""); }
-function renderCards(){
-  $("#cardGrid").innerHTML = state.students.length ? cardsMarkup() : '<div class="empty">Add students first — their cards will appear here.</div>';
-}
-$("#printCards").onclick = () => { if(!state.students.length){ toast("Add students first"); return; } try{ window.print(); }catch(e){ toast("Printing is blocked here. Use Download cards instead."); } };
-$("#dlCards").onclick = async () => {
-  if(!state.students.length){ toast("Add students first"); return; }
-  const html = `<!DOCTYPE html><html><head><meta charset="utf-8"><title>Student cards</title><style>
-body{font-family:Arial,sans-serif;margin:12mm} .cards{display:grid;grid-template-columns:repeat(4,1fr);gap:6mm}
-.card{border:1px dashed #888;border-radius:3mm;padding:3mm;text-align:center;break-inside:avoid}
-.card svg{width:100%;height:auto} .cn{font-weight:bold;margin-top:2mm;font-size:12pt}
-</style></head><body><div class="cards">${cardsMarkup()}</div><script>window.onload=()=>window.print()<\/script></body></html>`;
-  await offerFile("student-cards.html", html);
-};
 async function offerFile(filename, data){
   try{ const type=filename.endsWith(".csv")?"text/csv":filename.endsWith(".json")?"application/json":"text/html";
     const url=URL.createObjectURL(new Blob([data],{type})); const a=document.createElement("a");
@@ -12636,8 +12649,107 @@ async function offerFile(filename, data){
   }catch(e){ toast("Couldn't save the file"); return false; }
 }
 
+/* ---------- classes ---------- */
+function renderClassbar(){
+  const bar=$("#classbar");
+  bar.innerHTML = state.classes.map(c=>`<button class="cpill" type="button" aria-pressed="${c.id===state.currentClassId}" data-c="${c.id}" dir="auto">${esc(c.name)}</button>`).join("")
+    + '<button class="cpill add" type="button" id="addClassPill">+ Class</button>';
+  bar.querySelectorAll("[data-c]").forEach(b=>b.onclick=()=>switchClass(b.dataset.c));
+  $("#addClassPill").onclick = openManageClasses;
+}
+async function switchClass(id){
+  if(id===state.currentClassId) return;
+  state.currentClassId=id; saveSelection();
+  if(!$("#absOverlay").hidden) closeAbsentees();
+  await loadDaysFor(id);
+  renderAll();
+}
+function renderClassList(){
+  const ul=$("#classList");
+  if(!state.classes.length){ ul.innerHTML='<li class="empty">No classes yet — add one below.</li>'; return; }
+  ul.innerHTML = state.classes.map(c=>`<li><input class="renameIn" dir="auto" data-id="${c.id}" value="${esc(c.name)}" aria-label="Class name"><button class="x" data-delc="${c.id}">Remove</button></li>`).join("");
+  ul.querySelectorAll(".renameIn").forEach(inp=>{
+    inp.onchange = () => renameClass(inp.dataset.id, inp.value);
+    inp.onkeydown = e => { if(e.key==="Enter") inp.blur(); };
+  });
+  ul.querySelectorAll("[data-delc]").forEach(b=>b.onclick=()=>deleteClass(b.dataset.delc));
+}
+function renameClass(id, name){
+  const cls = state.classes.find(c=>c.id===id); if(!cls) return;
+  const clean = name.trim(); cls.name = clean || cls.name;
+  saveClassMeta(cls); renderClassbar(); renderAll();
+}
+async function deleteClass(id){
+  const cls = state.classes.find(c=>c.id===id); if(!cls) return;
+  if(!confirm("Remove "+cls.name+" and all its attendance records? This can't be undone.")) return;
+  state.classes = state.classes.filter(c=>c.id!==id);
+  delete state.dayCache[id]; delete state.daysLoaded[id];
+  if(state.currentClassId===id) state.currentClassId = state.classes[0] ? state.classes[0].id : null;
+  localSave(); saveSelection();
+  renderClassList(); renderClassbar(); renderAll();
+  await deleteClassRemote(id);
+}
+function openManageClasses(){ renderClassList(); $("#classOverlay").hidden=false; $("#newClassName").focus(); }
+function closeManageClasses(){ $("#classOverlay").hidden=true; }
+$("#classOverlayClose").onclick = closeManageClasses;
+$("#classOverlay").addEventListener("click", e => { if(e.target.id==="classOverlay") closeManageClasses(); });
+document.addEventListener("keydown", e => { if(e.key==="Escape" && !$("#classOverlay").hidden) closeManageClasses(); });
+$("#addClassSave").onclick = () => {
+  const name = $("#newClassName").value.trim();
+  if(!name){ toast("Type a class name"); return; }
+  const cls = {id:newId(), name, students:[], order:Date.now()};
+  state.classes.push(cls);
+  if(!state.currentClassId){ state.currentClassId = cls.id; saveSelection(); }
+  state.daysLoaded[cls.id] = true;
+  $("#newClassName").value="";
+  saveClassMeta(cls); renderClassList(); renderClassbar(); renderAll(); toast("Added "+name);
+};
+$("#newClassName").onkeydown = e => { if(e.key==="Enter"){ e.preventDefault(); $("#addClassSave").click(); } };
+
+/* ---------- students ---------- */
+$("#addNames").onclick = () => {
+  const cls = currentClass(); if(!cls){ toast("Add a class first"); openManageClasses(); return; }
+  const names = $("#namesIn").value.split("\n").map(s=>s.trim()).filter(Boolean);
+  if(!names.length){ toast("Type at least one name"); return; }
+  names.forEach(n => cls.students.push({id:newId(), name:n}));
+  cls.students.sort((a,b)=>a.name.localeCompare(b.name));
+  $("#namesIn").value=""; saveClassMeta(cls); renderAll(); toast(names.length+" added");
+};
+function removeStudent(id){
+  const cls = currentClass(); if(!cls) return;
+  const s = cls.students.find(x=>x.id===id); if(!s) return;
+  if(!confirm("Remove "+s.name+" from "+cls.name+"? Their card will stop working.")) return;
+  cls.students = cls.students.filter(x=>x.id!==id); saveClassMeta(cls); renderAll();
+}
+function renderRoster(){
+  const ul=$("#roster"), cls=currentClass();
+  $("#stuTag").textContent = cls ? "— "+cls.name : "";
+  if(!cls){ ul.innerHTML = noClassBlock(); return; }
+  if(!cls.students.length){ ul.innerHTML = '<li class="empty">No students yet. Add names above to get started.</li>'; return; }
+  ul.innerHTML = cls.students.map(s=>`<li><span class="n" dir="auto">${esc(s.name)}</span><button class="x" data-rm="${s.id}" aria-label="Remove ${esc(s.name)}">Remove</button></li>`).join("");
+  ul.querySelectorAll("[data-rm]").forEach(b=>b.onclick=()=>removeStudent(b.dataset.rm));
+}
+
+/* ---------- cards ---------- */
+function qrSvg(text){ const q=qrcode(0,"M"); q.addData(text); q.make(); return q.createSvgTag({cellSize:4, margin:2, scalable:true}); }
+function cardsMarkup(cls){ return cls.students.map(s=>`<div class="card">${qrSvg(PREFIX+cls.id+":"+s.id)}<div class="cn" dir="auto">${esc(s.name)}</div></div>`).join(""); }
+function renderCards(){
+  const cls=currentClass();
+  $("#cardsTag").textContent = cls ? "— "+cls.name : "";
+  $("#cardGrid").innerHTML = !cls ? noClassBlock() : (cls.students.length ? cardsMarkup(cls) : '<div class="empty">Add students first — their cards will appear here.</div>');
+}
+$("#printCards").onclick = () => { const cls=currentClass(); if(!cls||!cls.students.length){ toast("Add students first"); return; } try{ window.print(); }catch(e){ toast("Printing is blocked here. Use Download cards instead."); } };
+$("#dlCards").onclick = async () => {
+  const cls=currentClass(); if(!cls||!cls.students.length){ toast("Add students first"); return; }
+  const html = `<!DOCTYPE html><html><head><meta charset="utf-8"><title>${esc(cls.name)} — cards</title><style>
+body{font-family:Arial,sans-serif;margin:12mm} .cards{display:grid;grid-template-columns:repeat(4,1fr);gap:6mm}
+.card{border:1px dashed #888;border-radius:3mm;padding:3mm;text-align:center;break-inside:avoid}
+.card svg{width:100%;height:auto} .cn{font-weight:bold;margin-top:2mm;font-size:12pt}
+</style></head><body><div class="cards">${cardsMarkup(cls)}</div><script>window.onload=()=>window.print()<\/script></body></html>`;
+  await offerFile("cards-"+fileSafe(cls.name)+".html", html);
+};
+
 /* ---------- scanning ---------- */
-const presentToday = () => (state.days[state.date] ||= {});
 function nowTime(){ const d=new Date(); return String(d.getHours()).padStart(2,"0")+":"+String(d.getMinutes()).padStart(2,"0"); }
 function beep(ok){
   try{ const a=new (window.AudioContext||window.webkitAudioContext)(); const o=a.createOscillator(); const g=a.createGain();
@@ -12645,59 +12757,48 @@ function beep(ok){
   try{ navigator.vibrate && navigator.vibrate(ok?80:[60,60,60]); }catch(e){}
 }
 function showLast(msg, kind){ const l=$("#last"); l.textContent=msg; l.className="last "+kind; }
-function markPresent(id, source){
-  const s = state.students.find(x=>x.id===id);
-  if(!s){ showLast("This card isn't on your class list.", "warn"); beep(false); return; }
-  const p = presentToday();
+function markPresent(classId, id, source){
+  const cls = currentClass(); if(!cls) return;
+  if(classId && classId!==cls.id){
+    const other = state.classes.find(c=>c.id===classId);
+    showLast("That card is for "+(other?other.name:"a different class")+", not "+cls.name+".", "warn");
+    if(source==="scan") beep(false);
+    return;
+  }
+  const s = cls.students.find(x=>x.id===id);
+  if(!s){ showLast("This card isn't on "+cls.name+"’s list.", "warn"); if(source==="scan") beep(false); return; }
+  const p = presentFor(cls.id, state.date);
   if(p[id]){ showLast(s.name+" is already checked in ("+p[id]+").", "warn"); if(source==="scan") beep(false); return; }
-  p[id] = nowTime(); saveDay(state.date);
+  p[id] = nowTime(); saveDayData(cls.id, state.date);
   showLast("✓ "+s.name+" — present at "+p[id], "ok"); if(source==="scan") beep(true);
   renderScan(); renderRecords();
 }
 function toggleManual(id){
-  const p = presentToday();
-  if(p[id]){ delete p[id]; saveDay(state.date); renderScan(); renderRecords(); }
-  else markPresent(id, "manual");
+  const cls = currentClass(); if(!cls) return;
+  const p = presentFor(cls.id, state.date);
+  if(p[id]){ delete p[id]; saveDayData(cls.id, state.date); renderScan(); renderRecords(); }
+  else markPresent(cls.id, id, "manual");
 }
 function renderScan(){
   $("#day").value = state.date;
-  const p = presentToday(), n = Object.keys(p).filter(id=>state.students.some(s=>s.id===id)).length;
-  $("#count").textContent = n+" / "+state.students.length;
+  const cls = currentClass();
+  $("#scanTag").textContent = cls ? "— "+cls.name : "";
+  $("#finishBtn").disabled = !cls;
+  if(!cls){ $("#count").textContent="0 / 0"; $("#manual").innerHTML = noClassBlock(); return; }
+  const p = presentFor(cls.id, state.date), n = Object.keys(p).filter(id=>cls.students.some(s=>s.id===id)).length;
+  $("#count").textContent = n+" / "+cls.students.length;
   const ul=$("#manual");
-  if(!state.students.length){ ul.innerHTML='<li class="empty">Add students first.</li>'; return; }
-  ul.innerHTML = state.students.map(s=>`<li><span class="n">${esc(s.name)}</span><button class="pill ${p[s.id]?"in":""}" data-m="${s.id}">${p[s.id]?"Present "+p[s.id]:"Absent"}</button></li>`).join("");
+  if(!cls.students.length){ ul.innerHTML='<li class="empty">Add students first.</li>'; return; }
+  ul.innerHTML = cls.students.map(s=>`<li><span class="n" dir="auto">${esc(s.name)}</span><button class="pill ${p[s.id]?"in":""}" data-m="${s.id}">${p[s.id]?"Present "+p[s.id]:"Absent"}</button></li>`).join("");
   ul.querySelectorAll("[data-m]").forEach(b=>b.onclick=()=>toggleManual(b.dataset.m));
 }
 $("#day").onchange = e => { state.date = e.target.value || todayStr(); showLast("",""); if(!$("#absOverlay").hidden) closeAbsentees(); renderScan(); };
 
-/* ---------- finish attendance / absentees ---------- */
-function fmtDateLong(d){ const [y,m,dd]=d.split("-"); const dt=new Date(+y,+m-1,+dd); return dt.toLocaleDateString(undefined,{weekday:"long", day:"numeric", month:"long", year:"numeric"}); }
-function absenteesFor(date){ const p=state.days[date]||{}; return state.students.filter(s=>!p[s.id]); }
-function openAbsentees(){
-  if(!state.students.length){ toast("Add students first"); return; }
-  const list = absenteesFor(state.date);
-  $("#absWhen").textContent = fmtDateLong(state.date);
-  $("#absBody").innerHTML = list.length
-    ? "<ol>"+list.map(s=>`<li>${esc(s.name)}</li>`).join("")+"</ol>"
-    : '<div class="allhere">Everyone is present today 🎉</div>';
-  $("#absOverlay").hidden=false; $("#absClose").focus();
-}
-function closeAbsentees(){ $("#absOverlay").hidden=true; $("#finishBtn").focus(); }
-$("#finishBtn").onclick = openAbsentees;
-$("#absClose").onclick = closeAbsentees;
-$("#absOverlay").addEventListener("click", e => { if(e.target.id==="absOverlay") closeAbsentees(); });
-document.addEventListener("keydown", e => { if(e.key==="Escape" && !$("#absOverlay").hidden) closeAbsentees(); });
-$("#absCopy").onclick = async () => {
-  const list = absenteesFor(state.date);
-  const text = "Absences — "+fmtDateLong(state.date)+"\n"+(list.length ? list.map((s,i)=>(i+1)+". "+s.name).join("\n") : "Everyone present");
-  try{ await navigator.clipboard.writeText(text); toast("Copied — paste it into your journal"); }
-  catch(e){ toast("Couldn't copy — write from the list shown"); }
-};
-
 let stream=null, scanning=false, lastCode="", lastAt=0;
 const video=$("#video"), canvas=$("#scanCanvas"), ctx=canvas.getContext("2d",{willReadFrequently:true});
 async function startCam(){
-  if(!state.students.length){ toast("Add students first"); return; }
+  if(!currentClass()){ toast("Add a class first"); return; }
+  if(!currentClass().students.length){ toast("Add students first"); return; }
   try{
     stream = await navigator.mediaDevices.getUserMedia({video:{facingMode:"environment"}, audio:false});
     video.srcObject=stream; await video.play();
@@ -12721,8 +12822,10 @@ function loop(){
         if(code.data!==lastCode || t-lastAt>3000){
           lastCode=code.data; lastAt=t;
           $("#cam").classList.add("hit"); setTimeout(()=>$("#cam").classList.remove("hit"),400);
-          if(code.data.startsWith(PREFIX)) markPresent(code.data.slice(PREFIX.length), "scan");
-          else { showLast("That's not a student card.", "warn"); beep(false); }
+          if(code.data.startsWith(PREFIX)){
+            const rest = code.data.slice(PREFIX.length), i = rest.indexOf(":");
+            if(i>=0) markPresent(rest.slice(0,i), rest.slice(i+1), "scan"); else markPresent(null, rest, "scan");
+          } else { showLast("That's not a student card.", "warn"); beep(false); }
         }
       }
     }
@@ -12730,43 +12833,89 @@ function loop(){
   setTimeout(()=>requestAnimationFrame(loop), 120);
 }
 
+/* ---------- finish attendance / absentees ---------- */
+function fmtDateLong(d){ const [y,m,dd]=d.split("-"); const dt=new Date(+y,+m-1,+dd); return dt.toLocaleDateString(undefined,{weekday:"long", day:"numeric", month:"long", year:"numeric"}); }
+function absenteesFor(cls, date){ const p=presentFor(cls.id,date); return cls.students.filter(s=>!p[s.id]); }
+function openAbsentees(){
+  const cls=currentClass(); if(!cls){ toast("Add a class first"); return; }
+  if(!cls.students.length){ toast("Add students first"); return; }
+  const list = absenteesFor(cls, state.date);
+  $("#absWhen").textContent = cls.name+" — "+fmtDateLong(state.date);
+  $("#absBody").innerHTML = list.length
+    ? "<ol>"+list.map(s=>`<li dir="auto">${esc(s.name)}</li>`).join("")+"</ol>"
+    : '<div class="allhere">Everyone is present today 🎉</div>';
+  $("#absOverlay").hidden=false; $("#absClose").focus();
+}
+function closeAbsentees(){ $("#absOverlay").hidden=true; $("#finishBtn").focus(); }
+$("#finishBtn").onclick = openAbsentees;
+$("#absClose").onclick = closeAbsentees;
+$("#absOverlay").addEventListener("click", e => { if(e.target.id==="absOverlay") closeAbsentees(); });
+document.addEventListener("keydown", e => { if(e.key==="Escape" && !$("#absOverlay").hidden) closeAbsentees(); });
+$("#absCopy").onclick = async () => {
+  const cls=currentClass(); if(!cls) return;
+  const list = absenteesFor(cls, state.date);
+  const text = "Absences — "+cls.name+" — "+fmtDateLong(state.date)+"\n"+(list.length ? list.map((s,i)=>(i+1)+". "+s.name).join("\n") : "Everyone present");
+  try{ await navigator.clipboard.writeText(text); toast("Copied — paste it into your journal"); }
+  catch(e){ toast("Couldn't copy — write from the list shown"); }
+};
+
 /* ---------- records ---------- */
-function sortedDates(){ return Object.keys(state.days).filter(d=>Object.keys(state.days[d]).length).sort(); }
+function sortedDatesFor(cls){ const cd=classDays(cls.id); return Object.keys(cd).filter(d=>Object.keys(cd[d]).length).sort(); }
 function renderRecords(){
-  const dates=sortedDates(), box=$("#recordBox");
-  if(!state.students.length || !dates.length){ box.innerHTML='<div class="empty">No attendance taken yet. Scan cards on the Scan tab and they’ll show up here.</div>'; return; }
-  const fmt = d => { const [y,m,dd]=d.split("-"); return dd+"/"+m; };
+  const cls=currentClass();
+  $("#recTag").textContent = cls ? "— "+cls.name : "";
+  const box=$("#recordBox");
+  if(!cls){ box.innerHTML = noClassBlock(); return; }
+  const dates=sortedDatesFor(cls);
+  if(!cls.students.length || !dates.length){ box.innerHTML='<div class="empty">No attendance taken yet for '+esc(cls.name)+'. Scan cards on the Scan tab and they’ll show up here.</div>'; return; }
+  const cd = classDays(cls.id), fmt = d => { const [y,m,dd]=d.split("-"); return dd+"/"+m; };
   let h='<div class="tablebox"><table><thead><tr><th>Student</th><th>Present</th><th>Absent</th>'+dates.map(d=>`<th>${fmt(d)}</th>`).join("")+'</tr></thead><tbody>';
-  state.students.forEach(s=>{
-    const cells = dates.map(d=>state.days[d][s.id]);
+  cls.students.forEach(s=>{
+    const cells = dates.map(d=>cd[d][s.id]);
     const pr = cells.filter(Boolean).length;
-    h+=`<tr><td>${esc(s.name)}</td><td>${pr}</td><td>${dates.length-pr}</td>`+cells.map(c=>c?`<td class="p">✓</td>`:`<td class="a">–</td>`).join("")+"</tr>";
+    h+=`<tr><td dir="auto">${esc(s.name)}</td><td>${pr}</td><td>${dates.length-pr}</td>`+cells.map(c=>c?`<td class="p">✓</td>`:`<td class="a">–</td>`).join("")+"</tr>";
   });
   box.innerHTML = h+"</tbody></table></div>";
 }
-function buildCsv(){
-  const dates=sortedDates(), q=v=>'"'+String(v).replace(/"/g,'""')+'"';
+function buildCsv(cls){
+  const dates=sortedDatesFor(cls), cd=classDays(cls.id), q=v=>'"'+String(v).replace(/"/g,'""')+'"';
   const rows=[["Student","Present","Absent",...dates].map(q).join(",")];
-  state.students.forEach(s=>{
-    const cells=dates.map(d=>state.days[d][s.id]||""); const pr=cells.filter(Boolean).length;
+  cls.students.forEach(s=>{
+    const cells=dates.map(d=>cd[d][s.id]||""); const pr=cells.filter(Boolean).length;
     rows.push([s.name,pr,dates.length-pr,...cells.map(c=>c?"P "+c:"A")].map(q).join(","));
   });
   return "\ufeff"+rows.join("\r\n");
 }
 $("#dlCsv").onclick = async () => {
-  if(!sortedDates().length){ toast("No attendance to export yet"); return; }
-  const csv=buildCsv();
-  const ok = await offerFile("attendance-"+todayStr()+".csv", csv);
+  const cls=currentClass(); if(!cls){ toast("Add a class first"); return; }
+  if(!sortedDatesFor(cls).length){ toast("No attendance to export yet"); return; }
+  const csv=buildCsv(cls);
+  const ok = await offerFile("attendance-"+fileSafe(cls.name)+"-"+todayStr()+".csv", csv);
   if(!ok){ const t=$("#csvOut"); t.style.display="block"; t.value=csv; t.select(); toast("Copy this text and paste it into Excel"); }
 };
 
-$("#backupBtn").onclick = () => offerFile("attendance-backup-"+todayStr()+".json", JSON.stringify({students:state.students, days:state.days}));
+/* ---------- backup ---------- */
+$("#backupBtn").onclick = () => offerFile("attendance-backup-"+todayStr()+".json", JSON.stringify({classes:state.classes, dayCache:state.dayCache, currentClassId:state.currentClassId}));
 $("#restoreBtn").onclick = () => $("#restoreFile").click();
 $("#restoreFile").onchange = async e => {
   const f=e.target.files[0]; if(!f) return;
-  try{ const v=JSON.parse(await f.text()); if(!Array.isArray(v.students)) throw 0;
+  try{
+    const v=JSON.parse(await f.text());
+    if(!Array.isArray(v.classes)) throw 0;
     if(!confirm("Replace the current data with this backup?")) return;
-    state.students=v.students; state.days=v.days||{}; localSave(); renderAll(); toast("Backup restored");
+    toast("Restoring…");
+    state.classes = v.classes.map(c=>({id:c.id||newId(), name:c.name||"Class", students:Array.isArray(c.students)?c.students:[], order:c.order||0}));
+    state.dayCache = v.dayCache && typeof v.dayCache==="object" ? v.dayCache : {};
+    state.daysLoaded = {}; state.classes.forEach(c=>state.daysLoaded[c.id]=true);
+    state.currentClassId = state.classes.some(c=>c.id===v.currentClassId) ? v.currentClassId : (state.classes[0] ? state.classes[0].id : null);
+    localSave();
+    for(const c of state.classes){
+      await saveClassMeta(c);
+      const cd = classDays(c.id);
+      for(const d of Object.keys(cd)){ await saveDayData(c.id, d); }
+    }
+    await saveSelection();
+    renderAll(); toast("Backup restored");
   }catch(err){ toast("That file isn't an attendance backup"); }
   e.target.value="";
 };
@@ -12778,7 +12927,7 @@ document.querySelectorAll("nav button").forEach(b=>b.onclick=()=>{
   if(b.dataset.tab!=="scan" && scanning) stopCam();
 });
 
-function renderAll(){ renderRoster(); renderCards(); renderScan(); renderRecords(); }
+function renderAll(){ renderClassbar(); renderRoster(); renderCards(); renderScan(); renderRecords(); }
 loadAll();
 if("serviceWorker" in navigator && location.protocol.startsWith("http")) navigator.serviceWorker.register("sw.js").catch(()=>{});
 </script>
