@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Class attendance</title>
 <link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#1F3A93">
+<meta name="theme-color" content="#F4511E">
 <link rel="icon" href="icon-192.png">
 <link rel="apple-touch-icon" href="icon-192.png">
 <script>(function webpackUniversalModuleDefinition(root, factory) {
@@ -12410,24 +12410,24 @@ var qrcode = function() {
 </script>
 <style>
 :root{
-  --paper:#FBFBF7; --line:#DCE3F3; --line-strong:#B9C6E8; --margin:#D6423A;
-  --ink:#1F3A93; --text:#1B1E2B; --muted:#5B6278; --ok:#2E7D4F; --ok-bg:#E3F2E8;
-  --warn:#9A5B00; --warn-bg:#FFF1D6; --surface:#FFFFFF; --border:#C9D2EA;
+  --paper:#FFFBF2; --line:#FFE1EC; --line-strong:#FFC2D6; --margin:#FF3D71;
+  --ink:#F4511E; --text:#2B2340; --muted:#8B7E9E; --ok:#2BB673; --ok-bg:#DFF7EA;
+  --warn:#E8890C; --warn-bg:#FFF3DC; --surface:#FFFFFF; --border:#FFD9C2;
   box-sizing:border-box;
   padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
   color-scheme:light;
 }
 @media (prefers-color-scheme:dark){
   :root:not([data-theme="light"]){
-    --paper:#10162B; --line:#1A2342; --line-strong:#27325A; --margin:#E0625A;
-    --ink:#A9BEFF; --text:#E8EBF5; --muted:#9BA3BD; --ok:#7FD6A0; --ok-bg:#16352A;
-    --warn:#FFC266; --warn-bg:#3A2A0E; --surface:#161E38; --border:#2C3760; color-scheme:dark;
+    --paper:#201934; --line:#3A2A4E; --line-strong:#4E3A66; --margin:#FF6B9D;
+    --ink:#FF8A5B; --text:#F5EFFF; --muted:#B9ADD1; --ok:#4ADE80; --ok-bg:#173829;
+    --warn:#FFC24B; --warn-bg:#3A2A0E; --surface:#2C2148; --border:#4A3768; color-scheme:dark;
   }
 }
 :root[data-theme="dark"]{
-  --paper:#10162B; --line:#1A2342; --line-strong:#27325A; --margin:#E0625A;
-  --ink:#A9BEFF; --text:#E8EBF5; --muted:#9BA3BD; --ok:#7FD6A0; --ok-bg:#16352A;
-  --warn:#FFC266; --warn-bg:#3A2A0E; --surface:#161E38; --border:#2C3760; color-scheme:dark;
+  --paper:#201934; --line:#3A2A4E; --line-strong:#4E3A66; --margin:#FF6B9D;
+  --ink:#FF8A5B; --text:#F5EFFF; --muted:#B9ADD1; --ok:#4ADE80; --ok-bg:#173829;
+  --warn:#FFC24B; --warn-bg:#3A2A0E; --surface:#2C2148; --border:#4A3768; color-scheme:dark;
 }
 *,*::before,*::after{box-sizing:inherit}
 html{scroll-padding-top:env(safe-area-inset-top,0px)}
@@ -12447,17 +12447,18 @@ h1{font:700 2.6rem/1 Caveat,"Comic Sans MS",cursive; color:var(--ink); margin:0}
 .sticky{position:sticky; top:env(safe-area-inset-top,0px); z-index:5; background:var(--paper); padding-top:10px}
 .classbar{display:flex; gap:8px; overflow-x:auto; padding:2px 2px 8px; -webkit-overflow-scrolling:touch}
 .classbar::-webkit-scrollbar{height:6px}
-.cpill{flex:0 0 auto; font:inherit; font-weight:700; font-size:.95rem; padding:8px 15px; border-radius:999px; border:1.5px solid var(--border); background:var(--surface); color:var(--text); cursor:pointer; white-space:nowrap}
-.cpill[aria-pressed="true"]{background:var(--margin); border-color:var(--margin); color:#fff}
+.cpill{flex:0 0 auto; font:inherit; font-weight:700; font-size:.95rem; padding:8px 15px; border-radius:999px; border:2px solid var(--border); background:var(--surface); color:var(--text); cursor:pointer; white-space:nowrap}
 .cpill.add{border-style:dashed; color:var(--muted); background:transparent}
+.dot,.note-dot{width:8px; height:8px; border-radius:50%; display:inline-block; margin-inline-end:6px; vertical-align:middle}
+.note-dot{background:var(--warn); margin-inline-start:2px}
 nav{display:flex; gap:6px; padding:6px 0 10px}
 nav button{flex:1; font:inherit; font-size:.95rem; padding:10px 6px; border:1.5px solid var(--border); background:var(--surface); color:var(--text); border-radius:10px; cursor:pointer}
 nav button[aria-selected="true"]{background:var(--ink); color:var(--paper); border-color:var(--ink); font-weight:700}
 section{display:none} section.on{display:block}
-h2{font:700 1.9rem/1.1 Caveat,"Comic Sans MS",cursive; color:var(--ink); margin:18px 0 8px; display:flex; align-items:baseline; gap:8px; flex-wrap:wrap}
+h2{font:700 1.9rem/1.1 Caveat,"Comic Sans MS",cursive; color:var(--class-accent, var(--ink)); margin:18px 0 8px; display:flex; align-items:baseline; gap:8px; flex-wrap:wrap}
 h2 .tag{font:400 1rem "Atkinson Hyperlegible",sans-serif; color:var(--muted)}
 p.help{color:var(--muted); margin:0 0 12px}
-textarea,input[type=date],.input{width:100%; font:inherit; padding:10px 12px; border:1.5px solid var(--border); border-radius:10px; background:var(--surface); color:var(--text)}
+textarea,input[type=date],input[type=text],.input{width:100%; font:inherit; padding:10px 12px; border:1.5px solid var(--border); border-radius:10px; background:var(--surface); color:var(--text)}
 textarea{min-height:140px; resize:vertical}
 .btn{font:inherit; font-weight:700; padding:11px 16px; border-radius:10px; border:1.5px solid var(--ink); background:var(--ink); color:var(--paper); cursor:pointer}
 .btn.ghost{background:transparent; color:var(--ink)}
@@ -12465,11 +12466,13 @@ textarea{min-height:140px; resize:vertical}
 .row{display:flex; gap:8px; flex-wrap:wrap; align-items:center; margin:10px 0}
 button:focus-visible,textarea:focus-visible,input:focus-visible{outline:3px solid var(--margin); outline-offset:2px}
 ul.names{list-style:none; padding:0; margin:8px 0}
-ul.names li{display:flex; align-items:center; gap:10px; min-height:44px; border-bottom:1px solid var(--line-strong)}
+ul.names li{display:flex; align-items:center; gap:6px; min-height:44px; border-bottom:1px solid var(--line-strong)}
 ul.names li .n{flex:1; font-weight:700}
 ul.names input.renameIn{flex:1; min-width:0; font:inherit; font-weight:700; padding:7px 8px; border:1px solid transparent; border-radius:6px; background:transparent; color:var(--text)}
 ul.names input.renameIn:hover,ul.names input.renameIn:focus{border-color:var(--border); background:var(--surface)}
 .x{font:inherit; border:0; background:none; color:var(--margin); cursor:pointer; padding:8px; flex:0 0 auto}
+.iconbtn{font-size:1.05rem; line-height:1; background:none; border:0; cursor:pointer; padding:8px; border-radius:8px; flex:0 0 auto}
+.iconbtn:hover{background:var(--surface)}
 .pill{font:inherit; font-size:.9rem; border-radius:999px; padding:6px 12px; border:1.5px solid var(--border); background:var(--surface); color:var(--muted); cursor:pointer; min-width:92px}
 .pill.in{background:var(--ok-bg); border-color:var(--ok); color:var(--ok); font-weight:700}
 .cam{position:relative; background:#000; border-radius:14px; overflow:hidden; aspect-ratio:4/3; max-height:60vh; margin:10px 0}
@@ -12477,12 +12480,12 @@ ul.names input.renameIn:hover,ul.names input.renameIn:focus{border-color:var(--b
 .cam .frame{position:absolute; inset:18%; border:3px solid rgba(255,255,255,.85); border-radius:14px; pointer-events:none}
 .cam.hit .frame{border-color:#5BE08D; box-shadow:0 0 0 999px rgba(46,125,79,.35)}
 .cam .idle{position:absolute; inset:0; display:grid; place-items:center; color:#fff; text-align:center; padding:20px}
-.count{font:700 2.4rem/1 Caveat,cursive; color:var(--ink)}
+.count{font:700 2.4rem/1 Caveat,cursive; color:var(--class-accent, var(--ink))}
 .last{min-height:52px; padding:10px 14px; border-radius:10px; font-weight:700; margin:8px 0}
 .last.ok{background:var(--ok-bg); color:var(--ok)}
 .last.warn{background:var(--warn-bg); color:var(--warn)}
 .cards{display:grid; grid-template-columns:repeat(auto-fill,minmax(150px,1fr)); gap:12px; margin:12px 0}
-.card{background:#fff; color:#111; border:1.5px dashed #9AA6C8; border-radius:10px; padding:10px; text-align:center; break-inside:avoid}
+.card{background:#fff; color:#111; border:1.5px solid #E7E2F5; border-radius:10px; padding:10px; text-align:center; break-inside:avoid}
 .card svg{width:100%; height:auto; display:block}
 .card .cn{font-weight:700; margin-top:6px; word-break:break-word}
 .tablebox{overflow-x:auto; border:1.5px solid var(--border); border-radius:10px; background:var(--surface); margin:10px 0}
@@ -12494,9 +12497,9 @@ td.p{color:var(--ok); font-weight:700} td.a{color:var(--margin)}
 .empty .btn{margin-top:10px}
 .toast{position:fixed; left:50%; bottom:calc(16px + env(safe-area-inset-bottom,0px)); transform:translateX(-50%); background:var(--text); color:var(--paper); padding:10px 16px; border-radius:10px; font-weight:700; opacity:0; transition:opacity .2s; pointer-events:none; max-width:90vw}
 .toast.show{opacity:1}
-.overlay{position:fixed; inset:0; background:rgba(10,14,30,.5); display:flex; align-items:center; justify-content:center; padding:16px; z-index:20}
+.overlay{position:fixed; inset:0; background:rgba(20,10,30,.5); display:flex; align-items:center; justify-content:center; padding:16px; z-index:20}
 .overlay[hidden]{display:none}
-.sheet{background:var(--paper); border:1.5px solid var(--border); border-radius:14px; max-width:420px; width:100%; max-height:85vh; overflow-y:auto; padding:22px; box-shadow:0 14px 44px rgba(0,0,0,.35)}
+.sheet{background:var(--paper); border:1.5px solid var(--border); border-top:5px solid var(--class-accent, var(--ink)); border-radius:14px; max-width:420px; width:100%; max-height:85vh; overflow-y:auto; padding:22px; box-shadow:0 14px 44px rgba(0,0,0,.35)}
 .sheet h3{font:700 2rem/1.05 Caveat,"Comic Sans MS",cursive; color:var(--ink); margin:0 0 2px}
 .sheet .when{color:var(--muted); margin:0 0 14px}
 .sheet ol{margin:0 0 16px; padding-left:24px}
@@ -12516,7 +12519,7 @@ td.p{color:var(--ok); font-weight:700} td.a{color:var(--margin)}
 <body>
 <div class="wrap">
   <header>
-    <h1>Class attendance</h1>
+    <h1>Class attendance 🎒</h1>
     <p class="sub">Print a card for each student, then scan them with your phone as they come in.</p>
   </header>
 
@@ -12535,6 +12538,7 @@ td.p{color:var(--ok); font-weight:700} td.a{color:var(--margin)}
     <p class="help">Paste or type names, one per line — Arabic or Latin script both work.</p>
     <textarea id="namesIn" dir="auto" placeholder="أمينة بن علي&#10;Yacine Haddad&#10;سارة منصوري"></textarea>
     <div class="row"><button class="btn" id="addNames">Add students</button><span class="status" id="saveStatus"></span></div>
+    <div class="row"><input type="text" id="stuFilter" dir="auto" placeholder="Search students…"></div>
     <ul class="names" id="roster"></ul>
   </section>
 
@@ -12557,7 +12561,8 @@ td.p{color:var(--ok); font-weight:700} td.a{color:var(--margin)}
     <div class="row"><button class="btn" id="camBtn">Start camera</button></div>
     <div class="last" id="last" aria-live="polite"></div>
     <h2>Check by hand</h2>
-    <p class="help">For a forgotten card, tap the student’s name.</p>
+    <p class="help">For a forgotten card, tap the student’s name. The 📝 opens a note.</p>
+    <div class="row"><input type="text" id="manFilter" dir="auto" placeholder="Search students…"></div>
     <ul class="names" id="manual"></ul>
     <div class="row"><button class="btn" id="finishBtn">Finish today’s attendance</button></div>
   </section>
@@ -12594,10 +12599,22 @@ td.p{color:var(--ok); font-weight:700} td.a{color:var(--margin)}
     <p class="when">Add, rename, or remove a class.</p>
     <ul class="names" id="classList"></ul>
     <div class="row">
-      <input type="text" id="newClassName" class="input" dir="auto" placeholder="Class name" style="flex:1; min-width:140px">
+      <input type="text" id="newClassName" dir="auto" placeholder="Class name" style="flex:1; min-width:140px">
       <button class="btn" id="addClassSave">Add</button>
     </div>
     <div class="actions"><button class="btn ghost" id="classOverlayClose">Done</button></div>
+  </div>
+</div>
+
+<div class="overlay" id="noteOverlay" hidden role="dialog" aria-modal="true" aria-labelledby="noteTitle">
+  <div class="sheet">
+    <h3 id="noteTitle">Note</h3>
+    <p class="when" id="noteWho" dir="auto"></p>
+    <textarea id="noteText" dir="auto" placeholder="Anything worth remembering about this student…"></textarea>
+    <div class="actions">
+      <button class="btn" id="noteSave">Save</button>
+      <button class="btn ghost" id="noteClose">Close</button>
+    </div>
   </div>
 </div>
 
@@ -12607,7 +12624,18 @@ const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>'
 const todayStr = () => { const d = new Date(); return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0"); };
 const fileSafe = s => String(s||"class").replace(/[\\/:*?"<>|]+/g,"_").trim() || "class";
 const PREFIX = "PRESENCE:";
-const state = { classes: [], currentClassId: null, dayCache: {}, daysLoaded: {}, date: todayStr() };
+const CLASS_COLORS = [
+  {bg:'#FF6B6B', fg:'#FFFFFF', deep:'#C92A2A'},
+  {bg:'#FFA94D', fg:'#402000', deep:'#D9480F'},
+  {bg:'#FFD43B', fg:'#3D2E00', deep:'#A97F00'},
+  {bg:'#51CF66', fg:'#04310F', deep:'#2B8A3E'},
+  {bg:'#38D9A9', fg:'#033127', deep:'#0B7A63'},
+  {bg:'#4DABF7', fg:'#052A4A', deep:'#1864AB'},
+  {bg:'#9775FA', fg:'#FFFFFF', deep:'#6741D9'},
+  {bg:'#F783AC', fg:'#3B0A1E', deep:'#C2255C'}
+];
+function classColor(id){ let h=0; for(const ch of String(id)) h=(h*31+ch.charCodeAt(0))>>>0; return CLASS_COLORS[h % CLASS_COLORS.length]; }
+const state = { classes: [], currentClassId: null, dayCache: {}, daysLoaded: {}, date: todayStr(), filterStu:"", filterMan:"" };
 let db = null, downloads = null;
 
 function toast(msg){ const t=$("#toast"); t.textContent=msg; t.classList.add("show"); clearTimeout(toast.h); toast.h=setTimeout(()=>t.classList.remove("show"),2200); }
@@ -12617,6 +12645,11 @@ function classDays(id){ return (state.dayCache[id] ||= {}); }
 function presentFor(classId, date){ const cd=classDays(classId); return (cd[date] ||= {}); }
 function noClassBlock(){ return '<div class="empty">No class selected yet. <button class="btn openClasses" type="button">Add a class</button></div>'; }
 document.addEventListener("click", e => { if(e.target.closest(".openClasses")) openManageClasses(); });
+function applyClassAccent(){
+  const cls=currentClass(), col = cls ? classColor(cls.id) : null;
+  if(col) document.documentElement.style.setProperty('--class-accent', col.deep);
+  else document.documentElement.style.removeProperty('--class-accent');
+}
 
 /* ---------- storage (swapped for the offline build) ---------- */
 function localSave(){ try{ localStorage.setItem("attendance-v2", JSON.stringify({classes:state.classes, dayCache:state.dayCache, currentClassId:state.currentClassId})); }catch(e){} }
@@ -12652,14 +12685,19 @@ async function offerFile(filename, data){
 /* ---------- classes ---------- */
 function renderClassbar(){
   const bar=$("#classbar");
-  bar.innerHTML = state.classes.map(c=>`<button class="cpill" type="button" aria-pressed="${c.id===state.currentClassId}" data-c="${c.id}" dir="auto">${esc(c.name)}</button>`).join("")
-    + '<button class="cpill add" type="button" id="addClassPill">+ Class</button>';
+  bar.innerHTML = state.classes.map(c=>{
+    const sel = c.id===state.currentClassId, col=classColor(c.id);
+    const style = sel ? `background:${col.bg};border-color:${col.bg};color:${col.fg}` : `border-color:${col.bg}`;
+    const dot = sel ? "" : `<span class="dot" style="background:${col.bg}"></span>`;
+    return `<button class="cpill" type="button" aria-pressed="${sel}" data-c="${c.id}" dir="auto" style="${style}">${dot}${esc(c.name)}</button>`;
+  }).join("") + '<button class="cpill add" type="button" id="addClassPill">+ Class</button>';
   bar.querySelectorAll("[data-c]").forEach(b=>b.onclick=()=>switchClass(b.dataset.c));
   $("#addClassPill").onclick = openManageClasses;
 }
 async function switchClass(id){
   if(id===state.currentClassId) return;
   state.currentClassId=id; saveSelection();
+  state.filterStu=""; state.filterMan=""; $("#stuFilter").value=""; $("#manFilter").value="";
   if(!$("#absOverlay").hidden) closeAbsentees();
   await loadDaysFor(id);
   renderAll();
@@ -12667,7 +12705,10 @@ async function switchClass(id){
 function renderClassList(){
   const ul=$("#classList");
   if(!state.classes.length){ ul.innerHTML='<li class="empty">No classes yet — add one below.</li>'; return; }
-  ul.innerHTML = state.classes.map(c=>`<li><input class="renameIn" dir="auto" data-id="${c.id}" value="${esc(c.name)}" aria-label="Class name"><button class="x" data-delc="${c.id}">Remove</button></li>`).join("");
+  ul.innerHTML = state.classes.map(c=>{
+    const col=classColor(c.id);
+    return `<li><span class="dot" style="background:${col.bg}"></span><input class="renameIn" dir="auto" data-id="${c.id}" value="${esc(c.name)}" aria-label="Class name"><button class="x" data-delc="${c.id}">Remove</button></li>`;
+  }).join("");
   ul.querySelectorAll(".renameIn").forEach(inp=>{
     inp.onchange = () => renameClass(inp.dataset.id, inp.value);
     inp.onkeydown = e => { if(e.key==="Enter") inp.blur(); };
@@ -12693,7 +12734,6 @@ function openManageClasses(){ renderClassList(); $("#classOverlay").hidden=false
 function closeManageClasses(){ $("#classOverlay").hidden=true; }
 $("#classOverlayClose").onclick = closeManageClasses;
 $("#classOverlay").addEventListener("click", e => { if(e.target.id==="classOverlay") closeManageClasses(); });
-document.addEventListener("keydown", e => { if(e.key==="Escape" && !$("#classOverlay").hidden) closeManageClasses(); });
 $("#addClassSave").onclick = () => {
   const name = $("#newClassName").value.trim();
   if(!name){ toast("Type a class name"); return; }
@@ -12707,11 +12747,12 @@ $("#addClassSave").onclick = () => {
 $("#newClassName").onkeydown = e => { if(e.key==="Enter"){ e.preventDefault(); $("#addClassSave").click(); } };
 
 /* ---------- students ---------- */
+$("#stuFilter").oninput = e => { state.filterStu = e.target.value; renderRoster(); };
 $("#addNames").onclick = () => {
   const cls = currentClass(); if(!cls){ toast("Add a class first"); openManageClasses(); return; }
   const names = $("#namesIn").value.split("\n").map(s=>s.trim()).filter(Boolean);
   if(!names.length){ toast("Type at least one name"); return; }
-  names.forEach(n => cls.students.push({id:newId(), name:n}));
+  names.forEach(n => cls.students.push({id:newId(), name:n, note:""}));
   cls.students.sort((a,b)=>a.name.localeCompare(b.name));
   $("#namesIn").value=""; saveClassMeta(cls); renderAll(); toast(names.length+" added");
 };
@@ -12721,18 +12762,49 @@ function removeStudent(id){
   if(!confirm("Remove "+s.name+" from "+cls.name+"? Their card will stop working.")) return;
   cls.students = cls.students.filter(x=>x.id!==id); saveClassMeta(cls); renderAll();
 }
+function studentRow(s){
+  return `<li><span class="n" dir="auto">${esc(s.name)}</span>${s.note?'<span class="note-dot" title="Has a note"></span>':''}<button class="iconbtn" data-note="${s.id}" aria-label="Note for ${esc(s.name)}" title="Note">📝</button><button class="x" data-rm="${s.id}" aria-label="Remove ${esc(s.name)}">Remove</button></li>`;
+}
 function renderRoster(){
   const ul=$("#roster"), cls=currentClass();
-  $("#stuTag").textContent = cls ? "— "+cls.name : "";
+  $("#stuTag").textContent = cls ? "— "+cls.name+" ("+cls.students.length+")" : "";
   if(!cls){ ul.innerHTML = noClassBlock(); return; }
   if(!cls.students.length){ ul.innerHTML = '<li class="empty">No students yet. Add names above to get started.</li>'; return; }
-  ul.innerHTML = cls.students.map(s=>`<li><span class="n" dir="auto">${esc(s.name)}</span><button class="x" data-rm="${s.id}" aria-label="Remove ${esc(s.name)}">Remove</button></li>`).join("");
+  const q = state.filterStu.trim().toLowerCase();
+  const list = q ? cls.students.filter(s=>s.name.toLowerCase().includes(q)) : cls.students;
+  if(!list.length){ ul.innerHTML = '<li class="empty">No students match “'+esc(state.filterStu)+'”.</li>'; return; }
+  ul.innerHTML = list.map(studentRow).join("");
   ul.querySelectorAll("[data-rm]").forEach(b=>b.onclick=()=>removeStudent(b.dataset.rm));
+  ul.querySelectorAll("[data-note]").forEach(b=>b.onclick=()=>openNote(b.dataset.note));
 }
+
+/* ---------- notes ---------- */
+let noteCtx = null;
+function openNote(studentId){
+  const cls=currentClass(); if(!cls) return;
+  const s = cls.students.find(x=>x.id===studentId); if(!s) return;
+  noteCtx = {classId:cls.id, studentId};
+  $("#noteWho").textContent = s.name;
+  $("#noteText").value = s.note || "";
+  $("#noteOverlay").hidden=false; $("#noteText").focus();
+}
+function closeNote(){ $("#noteOverlay").hidden=true; noteCtx=null; }
+$("#noteSave").onclick = () => {
+  if(!noteCtx) return;
+  const cls = state.classes.find(c=>c.id===noteCtx.classId); if(!cls) return;
+  const s = cls.students.find(x=>x.id===noteCtx.studentId); if(!s) return;
+  s.note = $("#noteText").value.trim();
+  saveClassMeta(cls); closeNote(); renderAll(); toast("Note saved");
+};
+$("#noteClose").onclick = closeNote;
+$("#noteOverlay").addEventListener("click", e => { if(e.target.id==="noteOverlay") closeNote(); });
 
 /* ---------- cards ---------- */
 function qrSvg(text){ const q=qrcode(0,"M"); q.addData(text); q.make(); return q.createSvgTag({cellSize:4, margin:2, scalable:true}); }
-function cardsMarkup(cls){ return cls.students.map(s=>`<div class="card">${qrSvg(PREFIX+cls.id+":"+s.id)}<div class="cn" dir="auto">${esc(s.name)}</div></div>`).join(""); }
+function cardsMarkup(cls){
+  const col = classColor(cls.id);
+  return cls.students.map(s=>`<div class="card" style="border-top:4px solid ${col.bg}">${qrSvg(PREFIX+cls.id+":"+s.id)}<div class="cn" dir="auto" style="color:${col.deep}">${esc(s.name)}</div></div>`).join("");
+}
 function renderCards(){
   const cls=currentClass();
   $("#cardsTag").textContent = cls ? "— "+cls.name : "";
@@ -12743,7 +12815,7 @@ $("#dlCards").onclick = async () => {
   const cls=currentClass(); if(!cls||!cls.students.length){ toast("Add students first"); return; }
   const html = `<!DOCTYPE html><html><head><meta charset="utf-8"><title>${esc(cls.name)} — cards</title><style>
 body{font-family:Arial,sans-serif;margin:12mm} .cards{display:grid;grid-template-columns:repeat(4,1fr);gap:6mm}
-.card{border:1px dashed #888;border-radius:3mm;padding:3mm;text-align:center;break-inside:avoid}
+.card{border:1px solid #ddd;border-radius:3mm;padding:3mm;text-align:center;break-inside:avoid}
 .card svg{width:100%;height:auto} .cn{font-weight:bold;margin-top:2mm;font-size:12pt}
 </style></head><body><div class="cards">${cardsMarkup(cls)}</div><script>window.onload=()=>window.print()<\/script></body></html>`;
   await offerFile("cards-"+fileSafe(cls.name)+".html", html);
@@ -12779,6 +12851,7 @@ function toggleManual(id){
   if(p[id]){ delete p[id]; saveDayData(cls.id, state.date); renderScan(); renderRecords(); }
   else markPresent(cls.id, id, "manual");
 }
+$("#manFilter").oninput = e => { state.filterMan = e.target.value; renderScan(); };
 function renderScan(){
   $("#day").value = state.date;
   const cls = currentClass();
@@ -12789,8 +12862,12 @@ function renderScan(){
   $("#count").textContent = n+" / "+cls.students.length;
   const ul=$("#manual");
   if(!cls.students.length){ ul.innerHTML='<li class="empty">Add students first.</li>'; return; }
-  ul.innerHTML = cls.students.map(s=>`<li><span class="n" dir="auto">${esc(s.name)}</span><button class="pill ${p[s.id]?"in":""}" data-m="${s.id}">${p[s.id]?"Present "+p[s.id]:"Absent"}</button></li>`).join("");
+  const q = state.filterMan.trim().toLowerCase();
+  const list = q ? cls.students.filter(s=>s.name.toLowerCase().includes(q)) : cls.students;
+  if(!list.length){ ul.innerHTML = '<li class="empty">No students match “'+esc(state.filterMan)+'”.</li>'; return; }
+  ul.innerHTML = list.map(s=>`<li><span class="n" dir="auto">${esc(s.name)}</span>${s.note?'<span class="note-dot" title="Has a note"></span>':''}<button class="iconbtn" data-note="${s.id}" aria-label="Note for ${esc(s.name)}" title="Note">📝</button><button class="pill ${p[s.id]?"in":""}" data-m="${s.id}">${p[s.id]?"Present "+p[s.id]:"Absent"}</button></li>`).join("");
   ul.querySelectorAll("[data-m]").forEach(b=>b.onclick=()=>toggleManual(b.dataset.m));
+  ul.querySelectorAll("[data-note]").forEach(b=>b.onclick=()=>openNote(b.dataset.note));
 }
 $("#day").onchange = e => { state.date = e.target.value || todayStr(); showLast("",""); if(!$("#absOverlay").hidden) closeAbsentees(); renderScan(); };
 
@@ -12850,7 +12927,12 @@ function closeAbsentees(){ $("#absOverlay").hidden=true; $("#finishBtn").focus()
 $("#finishBtn").onclick = openAbsentees;
 $("#absClose").onclick = closeAbsentees;
 $("#absOverlay").addEventListener("click", e => { if(e.target.id==="absOverlay") closeAbsentees(); });
-document.addEventListener("keydown", e => { if(e.key==="Escape" && !$("#absOverlay").hidden) closeAbsentees(); });
+document.addEventListener("keydown", e => {
+  if(e.key!=="Escape") return;
+  if(!$("#absOverlay").hidden) closeAbsentees();
+  else if(!$("#classOverlay").hidden) closeManageClasses();
+  else if(!$("#noteOverlay").hidden) closeNote();
+});
 $("#absCopy").onclick = async () => {
   const cls=currentClass(); if(!cls) return;
   const list = absenteesFor(cls, state.date);
@@ -12879,10 +12961,10 @@ function renderRecords(){
 }
 function buildCsv(cls){
   const dates=sortedDatesFor(cls), cd=classDays(cls.id), q=v=>'"'+String(v).replace(/"/g,'""')+'"';
-  const rows=[["Student","Present","Absent",...dates].map(q).join(",")];
+  const rows=[["Student","Present","Absent",...dates,"Notes"].map(q).join(",")];
   cls.students.forEach(s=>{
     const cells=dates.map(d=>cd[d][s.id]||""); const pr=cells.filter(Boolean).length;
-    rows.push([s.name,pr,dates.length-pr,...cells.map(c=>c?"P "+c:"A")].map(q).join(","));
+    rows.push([s.name,pr,dates.length-pr,...cells.map(c=>c?"P "+c:"A"),s.note||""].map(q).join(","));
   });
   return "\ufeff"+rows.join("\r\n");
 }
@@ -12904,7 +12986,7 @@ $("#restoreFile").onchange = async e => {
     if(!Array.isArray(v.classes)) throw 0;
     if(!confirm("Replace the current data with this backup?")) return;
     toast("Restoring…");
-    state.classes = v.classes.map(c=>({id:c.id||newId(), name:c.name||"Class", students:Array.isArray(c.students)?c.students:[], order:c.order||0}));
+    state.classes = v.classes.map(c=>({id:c.id||newId(), name:c.name||"Class", students:Array.isArray(c.students)?c.students.map(s=>({id:s.id||newId(), name:s.name||"", note:s.note||""})):[], order:c.order||0}));
     state.dayCache = v.dayCache && typeof v.dayCache==="object" ? v.dayCache : {};
     state.daysLoaded = {}; state.classes.forEach(c=>state.daysLoaded[c.id]=true);
     state.currentClassId = state.classes.some(c=>c.id===v.currentClassId) ? v.currentClassId : (state.classes[0] ? state.classes[0].id : null);
@@ -12927,7 +13009,7 @@ document.querySelectorAll("nav button").forEach(b=>b.onclick=()=>{
   if(b.dataset.tab!=="scan" && scanning) stopCam();
 });
 
-function renderAll(){ renderClassbar(); renderRoster(); renderCards(); renderScan(); renderRecords(); }
+function renderAll(){ applyClassAccent(); renderClassbar(); renderRoster(); renderCards(); renderScan(); renderRecords(); }
 loadAll();
 if("serviceWorker" in navigator && location.protocol.startsWith("http")) navigator.serviceWorker.register("sw.js").catch(()=>{});
 </script>
